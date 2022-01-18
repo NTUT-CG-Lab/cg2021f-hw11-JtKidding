@@ -148,17 +148,18 @@ class threejsViewer {
 
             if (volume.used) {
                 uniforms = mesh.material.uniforms
-                if (uniforms['u_sizeEnable'] == 0) {
+                if (uniforms['u_sizeEnable'].value == 0) {
                     // initial
-                    let texture = new THREE.DataTexture3D(volume.sizeData, /*dims*/)
-                    // texture.format =...
-                    // texture.type =...
+                    let texture = new THREE.DataTexture3D(volume.sizeData, dims[0], dims[1], dims[2])
+                    // texture.format = THREE.RedFormat
+                    // texture.type = THREE.UnsignedByteType
 
                     uniforms['u_sizeEnable'].value = 1
-                    uniforms['u_sizeData'].value = texture
+                    uniforms['u_sizeData'].value = volume.size
                 } else {
-                    uniforms['u_sizeData'].value.image = { data: volume.sizeData }
-                    uniforms['u_sizeData'].value.needUpdate = true
+                    // uniforms['u_sizeData'].value.image = { data: volume.sizeData }
+                    // uniforms['u_sizeData'].value.needUpdate = true
+                    uniforms['u_sizeData'].value = new THREE.DataTexture(colormap, 256, 1)
                 }
             }
             // if (mesh == null) {
